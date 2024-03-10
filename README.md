@@ -11,7 +11,7 @@ There is a lot you'll need before you begin building your chatbot app. This will
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
 - A mySQL database hosted online.
 
-In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
+In this tutorial, I'll be using google clod for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
 You will also need to create a database and get all its credentials (user, passoword, IP, port)
 - A Streamlit account.
 
@@ -25,7 +25,7 @@ You need it to launch you project in streamlit.
 - An editor for the code. I recommend VSCode. 
 
 ### Step 1: Fork it
-Fork this repository in your own github.
+Fork this repository in your own github. This will create a copy of all these files in your own github account. 
 
 ### Step 2: OpenAI API key
 Figure out your OpenAI API key and the credentials for the google cloud SQL db.
@@ -88,4 +88,11 @@ Now that the app is working, customize the app. To change the chatbot behavior, 
 2) Changing and adding arguments to the "openai.ChatCompletion.create". There are many thing you can change (max number of tokens used, you can penalize certain words to decrease their frequency, change system temperature, etc.). You can check how to do it in https://platform.openai.com/docs/guides/gpt
 
 And there you have it!
+
+#### Update 06/03/24
+Thanks to Conrado Eiroa Solans, now this web app works better.
+Issues fixed: 
+- participants can now send the message by just pressing enter
+- conversation is scrolled down automatically
+- appearance is better
 
