@@ -1,4 +1,4 @@
-# Customized chatbot
+# Customizable chatbot
 
 This repo contains the instructions and code for the creation of a customized chatbot that can be embedded into a qualtrics survey.
 It is customized because you can change for the model that you want (gpt3.5, gpt4, etc.) and because you can customize system instructions.
