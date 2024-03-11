@@ -11,8 +11,8 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = []
 if "chat_started" not in st.session_state:
     st.session_state["chat_started"] = False
-if "conversation_id" not in st.session_state:
-    st.session_state["conversation_id"] = str(uuid.uuid4())
+#if "conversation_id" not in st.session_state:
+#    st.session_state["conversation_id"] = str(uuid.uuid4())
 
 # Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
@@ -70,7 +70,7 @@ bot_type = params.get("HighPsych", ["unknown bot type"])[0]
 
 
 # Function to save conversations to the database
-def save_conversation(conversation_id, user_id, content):
+def save_conversation(userID, content):
     try:
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_hour = datetime.now().strftime("%H:%M:%S")
@@ -198,7 +198,7 @@ else:
 # Input field for new messages
 if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
-    save_conversation(st.session_state["conversation_id"], "user_id", f"You: {prompt}")
+    save_conversation(st.session_state["userID"], "user_id", f"You: {prompt}")
     st.session_state["messages"].append({"role": "user", "content": prompt})
     # Immediately display the participant's message using the new style
     message_class = "user-message"
@@ -213,7 +213,7 @@ if prompt := st.chat_input("Please type your full response in one message."):
                                             messages=conversation_history)
 
     bot_response = response.choices[0].message.content
-    save_conversation(st.session_state["conversation_id"], "user_id", f"Alex: {bot_response}")
+    save_conversation(st.session_state["userID"], "user_id", f"Kit: {bot_response}")
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
     # Display the bot's response using the new style
     message_class = "bot-message"
