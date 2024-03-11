@@ -96,3 +96,7 @@ Issues fixed:
 - conversation is scrolled down automatically
 - appearance is better
 
+# How to cite this
+Oldemburgo de Mello, Victoria. 2024. Customizable chatbot. GitHub. github.com/vicomello/customizable_chatbot
+
+
