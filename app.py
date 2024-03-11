@@ -90,7 +90,7 @@ def save_conversation(conversation_id, user_id, content):
 
 if not st.session_state["chat_started"]:
     # Assuming this block is correctly executed when the app first loads
-    initial_bot_message = "Hello SPRG!"
+    initial_bot_message = "Hey there!"
     st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
     st.session_state["chat_started"] = True
 
@@ -188,8 +188,7 @@ for message in st.session_state["messages"]:
 if bot_type == "1":
     start_message = {
         "role": "system", 
-        "content": "You are a helpful and nice 50-year old human secretary who is passionate about your job. You answer things personally. You can answer all questions personally. You should know that you work for an organization called SPRG. If anyone asks you who is presenting at SPRG, you should answer: Louisa You, Elia Lam, and Victoria Oldemburgo De Mello "}
-        # "content": "You are a helpful and nice 50-year old human secretary who is passionate about your job. You answer things personally. You can answer all questions personally. During the conversations, Never mention: your age, name, that you're human, or that you're a secretary. You just behave naturally. You are now talking to a friend of yours, so act friendly and open."}
+        "content": "You are a helpful and nice 50-year old human secretary who is passionate about your job. You answer things personally. You can answer all questions personally. During the conversations, Never mention: your age, name, that you're human, or that you're a secretary. You just behave naturally. You are now talking to a friend of yours, so act friendly and open."}
 else:
     start_message = {
         "role": "system", 
