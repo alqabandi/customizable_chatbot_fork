@@ -2,7 +2,7 @@
 
 This repo contains the instructions and code for the creation of a customized chatbot that can be embedded into a qualtrics survey.
 It is customized because you can change for the model that you want (gpt3.5, gpt4, etc.) and because you can customize system instructions.
-The goal is that you can easily customize OpenAI chatbots to behave however you want and embed them into qualtrics for running experiments.
+The goal is that you can easily customize LLMs to behave however you want and embed them into qualtrics for running experiments.
 
 ## FIRST, you'll need:
 There is a lot you'll need before you begin building your chatbot app. This will take more time than actually developing the app.
