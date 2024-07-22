@@ -1,14 +1,14 @@
 # Customizable chatbot
 
 This repo contains the instructions and code for the creation of a customized chatbot that can be embedded into a qualtrics survey.
-It is customized because you can change for the model that you want (gpt3.5, gpt4, etc.) and because you can customize system instructions.
-The goal is that you can easily customize LLMs to behave however you want and embed them into qualtrics for running experiments.
+It is customizable as you can define model parameters to get the model behavior that you want. It also has the option for randomization, so you can use different model specifications to compare model behaviors.
+With this code, you can easily customize LLMs to behave however you want and embed them into qualtrics for running experiments.
 
 ## FIRST, you'll need:
-There is a lot you'll need before you begin building your chatbot app. This will take more time than actually developing the app.
-- An account with the OpenAI API. 
+- An account with the OpenAI API.
 
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
+
 - A mySQL database hosted online.
 
 In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
@@ -20,15 +20,13 @@ A free account works.
 
 You need it to launch you project in streamlit.
 
-- A bunch of things installed on your pc. Included but not limited to python3, streamlit, git, mysql...
-
-- An editor for the code. I recommend VSCode. 
+- A code editor installed on your computer. I recommend VSCode. 
 
 ### Step 1: Fork it
 Fork this repository in your own github. This will create a copy of all these files in your own github account. 
 
 ### Step 2: OpenAI API key
-Figure out your OpenAI API key and the credentials for the google cloud SQL db.
+Figure out your OpenAI API key and the credentials for the google cloud SQL databsabe.
 
 ### Step 3: Streamlit
 Create an app on streamlit and select the forked github repo as the source.
