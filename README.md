@@ -1,8 +1,6 @@
 # Customizable chatbot
 
-This repo contains the instructions and code for the creation of a customized chatbot that can be embedded into a qualtrics survey.
-It is customizable as you can define model parameters to get the model behavior that you want. It also has the option for randomization, so you can use different model specifications to compare model behaviors.
-With this code, you can easily customize LLMs to behave however you want and embed them into qualtrics for running experiments.
+This repository provides the instructions and code needed to create a customized chatbot that can be embedded into a Qualtrics survey. You can define various model parameters to achieve the desired chatbot behavior. Additionally, the code includes an option for randomization, allowing you to use different model specifications to compare behaviors. This enables easy customization of LLMs to suit your requirements and facilitates their integration into Qualtrics for conducting experiments.
 
 ## FIRST, you'll need:
 - An account with the OpenAI API.
