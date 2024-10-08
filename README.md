@@ -44,10 +44,10 @@ Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by
     
     // Create the iframe element
     var iframe = document.createElement('iframe');
-	var userID = "${e://Field/ResponseID}";  // Fetch the ResponseID from Qualtrics
+    var userID = "${e://Field/ResponseID}";  // Fetch the ResponseID from Qualtrics
     
     // Set the source of the iframe to your chatbot's URL
-	iframe.src = "https://[YOUR-DOMAIN].streamlit.app/?embed=true&userID=${e://Field/ResponseID}";
+    iframe.src = "https://[YOUR-DOMAIN]streamlit.app/?embed=true&userID=${e://Field/ResponseID}&bot_type=1";
 
     // Set some styles for the iframe (you can adjust this to your needs)
     iframe.style.width = '100%';  // Take the full width of the parent container
@@ -60,7 +60,9 @@ Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by
     
     // Append the iframe to the placeholder
     placeholder.appendChild(iframe);
-});
+}
+
+// Removed extra closing parenthesis here
 
 Qualtrics.SurveyEngine.addOnReady(function()
 {
