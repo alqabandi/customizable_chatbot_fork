@@ -78,7 +78,7 @@ Qualtrics.SurveyEngine.addOnload(function() {
 
 In addition to the javascript, you need to add the chatbot element to html.
 
-Click on "HTML View" and paste the following following element by the end of the text:
+Go to the question where you want to display the chatbot. Click on the question to edit it and select "HTML View". Paste the following following element by the end of the text:
 
 ```
 <div id="chatbotPlaceholder">&nbsp;</div>
