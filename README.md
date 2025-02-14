@@ -38,41 +38,50 @@ Create a new qualtrics survey and create a Text/Graphic question.
 Under "Question Behavior" select "javascript".
 Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app).
 
-```Qualtrics.SurveyEngine.addOnload(function()
-{
-    // This function will create the iframe and add it to your Qualtrics question
-    
+```
+Qualtrics.SurveyEngine.addOnload(function() {
     // Create the iframe element
     var iframe = document.createElement('iframe');
     var userID = "${e://Field/ResponseID}";  // Fetch the ResponseID from Qualtrics
-    
+
     // Set the source of the iframe to your chatbot's URL
-    iframe.src = "https://[YOUR-DOMAIN]streamlit.app/?embed=true&userID=${e://Field/ResponseID}&bot_type=1";
+    iframe.src = "https://conversationfriends.streamlit.app/?type=PERSON2&embedded=true&userID=${e://Field/ResponseID}";
 
-    // Set some styles for the iframe (you can adjust this to your needs)
+    // Increase the height of the iframe
     iframe.style.width = '100%';  // Take the full width of the parent container
-    iframe.style.height = '500px'; // Set a fixed height (or adjust as needed)
+    iframe.style.height = '550px'; // Adjust the height to show more content
     iframe.style.border = 'none';  // Remove any default borders
+    iframe.style.overflow = 'hidden';  // Hide overflow content
 
-    // Find a placeholder in your Qualtrics question 
-    // (for this example, we'll assume there's a div with an id of 'chatbotPlaceholder')
+    // Find a placeholder in your Qualtrics question
     var placeholder = document.getElementById('chatbotPlaceholder');
-    
+    placeholder.style.position = 'relative';
+    placeholder.style.overflow = 'hidden'; // Ensure container overflow is hidden
+
     // Append the iframe to the placeholder
     placeholder.appendChild(iframe);
-}
 
-// Removed extra closing parenthesis here
+    // Create a mask to hide the bottom 50px that contains the streamlit logo
+    var maskDiv = document.createElement('div');
+    maskDiv.style.position = 'absolute';
+    maskDiv.style.bottom = '0';
+    maskDiv.style.left = '0';
+    maskDiv.style.width = '100%';
+    maskDiv.style.height = '60px';  // Adjust height as needed to cover the icons
+    maskDiv.style.backgroundColor = 'white';  // Match background color of your app
+    maskDiv.style.zIndex = '9999';  // Ensure it sits on top of the iframe
 
-Qualtrics.SurveyEngine.addOnReady(function()
-{
-    // If you need any functionality to run after the page is fully displayed, you can add it here
+    // Append the mask div on top of the iframe
+    placeholder.appendChild(maskDiv);
 });
+```
 
-Qualtrics.SurveyEngine.addOnUnload(function()
-{
-    // If you need any functionality to run when the page is unloaded, you can add it here
-});
+In addition to the javascript, you need to add the chatbot element to html.
+
+Click on "HTML View" and paste the following following element by the end of the text:
+
+```
+<div id="chatbotPlaceholder">&nbsp;</div>
 ```
 
 ### Step 6: Publish the survey and test it.
