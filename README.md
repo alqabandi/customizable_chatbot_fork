@@ -45,7 +45,7 @@ Qualtrics.SurveyEngine.addOnload(function() {
     var userID = "${e://Field/ResponseID}";  // Fetch the ResponseID from Qualtrics
 
     // Set the source of the iframe to your chatbot's URL
-    iframe.src = "https://conversationfriends.streamlit.app/?type=PERSON2&embedded=true&userID=${e://Field/ResponseID}";
+    iframe.src = "https://[YOUR-DOMAIN].streamlit.app/?type=PERSON2&embedded=true&userID=${e://Field/ResponseID}";
 
     // Increase the height of the iframe
     iframe.style.width = '100%';  // Take the full width of the parent container
