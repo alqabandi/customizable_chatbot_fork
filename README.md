@@ -26,12 +26,12 @@ Fork this repository in your own github. This will create a copy of all these fi
 ### Step 2: OpenAI API key
 Figure out your OpenAI API key and the credentials for the google cloud SQL databsabe.
 
-### Step 3: Streamlit
+### Step 3: Set up MySQL database on Google Cloud
+Create an instance, create a database, get all your keys.
+
+### Step 4: Streamlit
 Create an app on streamlit and select the forked github repo as the source.
 Under your app, go to settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
-
-### Step 4: Set up MySQL database on Google Cloud
-Create an instance, create a database, get all your keys.
 
 ### Step 5: Qualtrics
 Create a new qualtrics survey and create a Text/Graphic question.
