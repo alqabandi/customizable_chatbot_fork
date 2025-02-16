@@ -8,11 +8,9 @@ This repository provides the instructions and code needed to create a customized
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
 
 - A mySQL database hosted online.
-- 
 In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
 
 - A Streamlit account.
-- 
 A free account works.
 
 - A Github account.
