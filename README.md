@@ -126,17 +126,19 @@ For testing, you'll chat with the chatbot. I recommend it chatting several times
 - ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content);
 - ensure that the bot is giving you the desired responses given the user message.
 
-One important thing to notice is that the amount of people who can chat with the bot at once depend on your OpenAI API account tier. The higher the tier, the more people can send messages at once. If you're tier 1, expecte it to be around ....
+
+#### Important note on tokens and participants limits
+The amount of participants that can simultaneously talk to the chatbot depend on the number of tokens you can send per minute. That limit is defined by your OpenAI account Tier. In tier 1 (as of 2024), there is a limit of 10,000 tokens per minute with GPT4. 10,000 tokens is about 75 messages per minute (assuming an average of 100 words per message and 1 token per 3/4 word). Assuming a high ceiling of 5 messages per minute, you should allow only 15 participants talking to the bot at a time. This estimation matches my personal experience collecting data with participants, where the chatbot starts to crash if more then 15 people are concurrently chatting with it.
+
+If your OpenAI account has a higher tier, your limit my be a lot higher. As my account became Tier 3, the API allowed for 600,000 tokens per minute (GPT4), which translated to 900 people talking to chatbot concurrently (considering the same assumptions of messages per minute, words per message, and tokens per word as above.) 
 
 ### Step 7: Customize it!
 Now that the app is working, customize the app. To change the chatbot behavior, there are two main things you can do:
-1) change the message on "start_message", where we tell the system how to behave. In the world of LLMs, this is known as the system prompt.
+1) change the message on "start_message", where we tell the system how to behave. In the world of LLMs, this is known as the system prompt. If you want to know the best strategies for creating good prompts, OpenAI has a guide: https://platform.openai.com/docs/guides/prompt-engineering
 2) Changing and adding arguments to the "openai.ChatCompletion.create". There are many thing you can change (max number of tokens used, you can penalize certain words to decrease their frequency, change system temperature, etc.). You can check how to do it in https://platform.openai.com/docs/guides/gpt
 
-And there you have it!
-
 #### Update 06/03/24
-Thanks to Conrado Eiroa Solans, now this web app works better.
+Thanks to Conrado Eiroa Solans, this web app now works better.
 Issues fixed: 
 - participants can now send the message by just pressing enter
 - conversation is scrolled down automatically
