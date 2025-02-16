@@ -121,9 +121,12 @@ Once that's done, you will use the branch function to allocate each person to th
 
 
 ### Step 6: Publish the survey and test it.
-For testing, you'll chat with the chatbot. To make sure it's working:
+For testing, you'll chat with the chatbot. I recommend it chatting several times and having other people talk to it in order to test it. To make sure it's working:
 - ensure there are no error messages;
-- ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content).
+- ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content);
+- ensure that the bot is giving you the desired responses given the user message.
+
+One important thing to notice is that the amount of people who can chat with the bot at once depend on your OpenAI API account tier. The higher the tier, the more people can send messages at once. If you're tier 1, expecte it to be around ....
 
 ### Step 7: Customize it!
 Now that the app is working, customize the app. To change the chatbot behavior, there are two main things you can do:
