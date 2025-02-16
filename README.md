@@ -35,7 +35,7 @@ Once your instance and database are created, you will have to create a table ins
 
 To create a table, the first thing you should do is to activate the cloud shell (the command line interfacte of google console).
 
-Make sure that you're in the correct project. Once in the right project, run the following command (make sure to change INSTANCE_NAME to your instance name. if you set up a different user, you might have to update it as well)
+Make sure that you're in the correct project (the name of the project should be displayed in your google console home screen). Once in the right project, run the following command (make sure to change INSTANCE_NAME to your instance name. if you set up a different user, you might have to update it as well)
 ```
 gcloud sql connect INSTANCE_NAME --user=root
 ```
