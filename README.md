@@ -14,7 +14,6 @@ In this tutorial, I'll be using google cloud for hosting. It's one of the easies
 A free account works.
 
 - A Github account.
-
 You need it to host your repository from which streamlit will pull the code.
 
 - A code editor installed on your computer. I recommend VSCode. 
