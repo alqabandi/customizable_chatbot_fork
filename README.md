@@ -3,19 +3,19 @@
 This repository provides the instructions and code needed to create a customized chatbot that can be embedded into a Qualtrics survey. You can define various model parameters to achieve the desired chatbot behavior. Additionally, the code includes an option for randomization, allowing you to use different model specifications to compare behaviors. This enables easy customization of LLMs to suit your requirements and facilitates their integration into Qualtrics for conducting experiments.
 
 ## FIRST, you'll need:
-- An account with the OpenAI API.
+- An account with the OpenAI API (platform.openai.com).
 You'll need to set up a payment method too.
 
 - A mySQL database hosted online.
-In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
+In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method (console.cloud.google.com).
 
-- A Streamlit account.
-A free account works.
+- A Streamlit account (streamlit.io)
+A free account is enough for this project.
 
-- A Github account.
+- A Github account (github.com)
 You need it to host your repository from which streamlit will pull the code.
 
-- A code editor installed on your computer. I recommend VSCode. 
+- A code editor installed on your computer. I recommend VSCode (code.visualstudio.com). 
 
 ### Step 1: Fork it
 Fork this repository in your own github. This will create a copy of all these files in your own github account. 
