@@ -4,7 +4,6 @@ This repository provides the instructions and code needed to create a customized
 
 ## FIRST, you'll need:
 - An account with the OpenAI API.
-
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
 
 - A mySQL database hosted online.
