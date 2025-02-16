@@ -53,7 +53,7 @@ CREATE TABLE table_name (
     );
 ```
 
-To make sure it works properly, you can run the following command and check if your new table is listed:
+To test if it worked properly, you can run the following command and check if your new table is listed:
 ```
 SHOW TABLES;
 ```
