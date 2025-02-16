@@ -117,7 +117,8 @@ You will create several questions, each question containing a different chatbot 
 
 Once that's done, you will use the branch function to allocate each person to their respective bots. If they were randomly assigned to bot type 1, then make sure to display bot type 1. Here's an example of what it should look like:
 
-<img width="1124" alt="image" src="https://github.com/user-attachments/assets/62ca0c5a-149e-4028-97ec-4894f6a5bcb5" />
+<img width="1109" alt="image" src="https://github.com/user-attachments/assets/26cab8f9-1bfa-41e5-a474-25ac4e95867f" />
+
 
 ### Step 6: Publish the survey and test it.
 For testing, you'll chat with the chatbot. To make sure it's working:
