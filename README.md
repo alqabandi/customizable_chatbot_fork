@@ -27,7 +27,29 @@ Fork this repository in your own github. This will create a copy of all these fi
 Figure out your OpenAI API key and the credentials for the google cloud SQL databsabe.
 
 ### Step 3: Set up MySQL database on Google Cloud
-Create an instance, create a database, get all your keys.
+Create an account on console.cloud.google.com.
+On the search bar, look for SQL. Create a Cloud SQL instance. It will take a few minutes for this operation to finish.
+In the "overview" page of your instance, open the "databases" tab and create a new database. Give the database a name related to your project.
+When you're creating the database, you will some passowords and keys to access your database. Make sure to save all those fields, especially the instance password. Save it somewhere.
+Once your instance and database are created, you will have to create a table inside the database.
+To create a table, the first thing you should do is to activate the cloud shell. 
+Make sure that you're in the correct project. Once in the right project, run the following command (make sure to change INSTANCE_NAME. if you set up a different user, you might have to update it as well)
+```
+gcloud sql connect INSTANCE_NAME --user=root
+```
+After successfully connecting to your instance, you'll be prompted to input the instance password. Paste it in there and press enter.
+If your password is correct, you should be on a SQL environment.
+
+Create a new table with the fields that you'll need. By deafault, the chatbot fields are user_id (matched with response id from qualtrics), date, hour, content (the actual messages sent), and chatbot type (if you have multiple chatbot types, this will be the type of chatbot that the participant was talking to). To create a table like that, you should run the following command (make sure to change table_name to a name that makes sense for your project):
+```
+CREATE TABLE table_name (
+        user_id VARCHAR(255),
+        date VARCHAR(255),
+        hour VARCHAR(255),
+        content MEDIUMTEXT,
+        chatbot_type VARCHAR(255)
+    )
+```
 
 ### Step 4: Streamlit
 Create an app on streamlit and select the forked github repo as the source.
