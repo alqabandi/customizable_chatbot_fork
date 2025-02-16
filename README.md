@@ -26,7 +26,7 @@ In your OpenAI API account, create a new project key. Copy this key and save it 
 ### Step 3: Set up MySQL database on Google Cloud
 Create an account on console.cloud.google.com
 
-On the search bar, look for SQL. Create a Cloud SQL instance. You'll be prompted to select a few parameters for your instance. Feel free to play around and select the cheapest option. It will take a few minutes for this operation to finish.
+On the search bar, look for SQL. Create a Cloud SQL instance. You'll be prompted to select a few parameters for your instance. Feel free to play around and select the parameters that will give you the cheapest final price. It will take a few minutes for this operation to finish.
 
 In the "overview" page of your instance, open the "databases" tab and create a new database. Give the database a name related to your project.
 
