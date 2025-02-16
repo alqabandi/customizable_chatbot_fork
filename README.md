@@ -4,7 +4,7 @@ This repository provides the instructions and code needed to create a customized
 
 ## FIRST, you'll need:
 - An account with the OpenAI API.
-You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
+You'll need to set up a payment method too.
 
 - A mySQL database hosted online.
 In this tutorial, I'll be using google cloud for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
@@ -21,7 +21,7 @@ You need it to host your repository from which streamlit will pull the code.
 Fork this repository in your own github. This will create a copy of all these files in your own github account. 
 
 ### Step 2: OpenAI API key
-Figure out your OpenAI API key and the credentials for the google cloud SQL databsabe.
+In your OpenAI API account, create a new project key. Copy this key and save it somewhere safe.
 
 ### Step 3: Set up MySQL database on Google Cloud
 Create an account on console.cloud.google.com.
