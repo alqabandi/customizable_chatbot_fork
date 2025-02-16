@@ -48,17 +48,22 @@ CREATE TABLE table_name (
         hour VARCHAR(255),
         content MEDIUMTEXT,
         chatbot_type VARCHAR(255)
-    )
+    );
+```
+
+To make sure it works properly, you can run the following command and check if your new table is listed:
+```
+SHOW TABLES;
 ```
 
 ### Step 4: Streamlit
-Create an app on streamlit and select the forked github repo as the source.
-Under your app, go to settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
+Create a new app on streamlit. When prompted to select the source, select the forked github repo as the source.
+After your app is created, go to app settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
 
 ### Step 5: Qualtrics
 Create a new qualtrics survey and create a Text/Graphic question.
 Under "Question Behavior" select "javascript".
-Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app).
+Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app and PLACEHOLDER by chatbot type).
 
 ```
 Qualtrics.SurveyEngine.addOnload(function() {
@@ -67,7 +72,7 @@ Qualtrics.SurveyEngine.addOnload(function() {
     var userID = "${e://Field/ResponseID}";  // Fetch the ResponseID from Qualtrics
 
     // Set the source of the iframe to your chatbot's URL
-    iframe.src = "https://[YOUR-DOMAIN].streamlit.app/?type=PERSON2&embedded=true&userID=${e://Field/ResponseID}";
+    iframe.src = "https://[YOUR-DOMAIN].streamlit.app/?type=PLACEHOLDER&embedded=true&userID=${e://Field/ResponseID}";
 
     // Increase the height of the iframe
     iframe.style.width = '100%';  // Take the full width of the parent container
@@ -106,6 +111,14 @@ Go to the question where you want to display the chatbot. Click on the question 
 <div id="chatbotPlaceholder">&nbsp;</div>
 ```
 
+If you want to have multiple chatbots with different behaviors (and participants to be randomly assigned to one of them), you'll have to do the randomization through qualtrics.
+You will create several questions, each question containing a different chatbot (bot type can be defined by changing 'type=PLACEHOLDER' in the bot url). Then, under 'Survey flow', you can use a randomizer with an embedded data field to select the bot type. It should look something like this:
+<img width="1161" alt="image" src="https://github.com/user-attachments/assets/1ea9d803-eac6-4c95-8480-c561de868364" />
+
+Once that's done, you will use the branch function to allocate each person to their respective bots. If they were randomly assigned to bot type 1, then make sure to display bot type 1. Here's an example of what it should look like:
+
+<img width="1124" alt="image" src="https://github.com/user-attachments/assets/62ca0c5a-149e-4028-97ec-4894f6a5bcb5" />
+
 ### Step 6: Publish the survey and test it.
 For testing, you'll chat with the chatbot. To make sure it's working:
 - ensure there are no error messages;
@@ -113,7 +126,7 @@ For testing, you'll chat with the chatbot. To make sure it's working:
 
 ### Step 7: Customize it!
 Now that the app is working, customize the app. To change the chatbot behavior, there are two main things you can do:
-1) change the message on "start_message", where we tell the system how to behave.
+1) change the message on "start_message", where we tell the system how to behave. In the world of LLMs, this is known as the system prompt.
 2) Changing and adding arguments to the "openai.ChatCompletion.create". There are many thing you can change (max number of tokens used, you can penalize certain words to decrease their frequency, change system temperature, etc.). You can check how to do it in https://platform.openai.com/docs/guides/gpt
 
 And there you have it!
