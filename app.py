@@ -303,44 +303,7 @@ for message in st.session_state["messages"]:
     else: # Fallback for user messages if name somehow not set (should not happen with new logic)
         st.markdown(f"<div class='message {message_class}'>{message['content']}</div>", unsafe_allow_html=True)
 
-# Delayed display of Bot 2's initial message
-if st.session_state.get("chat_started") and st.session_state.get("bot2_initial_pending_display", False):
-    DELAY_FOR_BOT2_INITIAL = 3  # seconds
-    bot2_placeholder = st.empty() 
-    bot2_name = bot_personality_2["name"]
-
-    # Show typing indicator for Bot 2
-    bot2_placeholder.markdown(f"<div class='message bot-message'><i>{bot2_name} is typing...</i></div>", unsafe_allow_html=True)
-    time.sleep(DELAY_FOR_BOT2_INITIAL) # Pause for the "typing" effect
-
-    # Generate and display Bot 2's actual message
-    initial_bot1_content = st.session_state.get("initial_bot1_opener_content")
-    if initial_bot1_content:
-        bot2_instructions = bot_personality_2["system_message"]
-        bot2_history = [
-            bot2_instructions,
-            {"role": "user", "content": initial_bot1_content} 
-        ]
-        try:
-            response_bot2 = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=bot2_history)
-            bot2_response_content = response_bot2.choices[0].message.content
-        except Exception as e:
-            print(f"Error generating Bot 2 initial response (delayed): {e}")
-            bot2_response_content = "Hmm, let me think about that..." # Fallback response
-        
-        new_bot2_message = {"role": "assistant", "content": bot2_response_content, "name": bot2_name}
-        # Prepend to ensure it appears before any *new* user input if they type fast, but after existing messages.
-        # Actually, append is fine since this block runs after the main display loop for existing messages.
-        st.session_state["messages"].append(new_bot2_message)
-        save_conversation(st.session_state["conversation_id"], user_id, f'{bot2_name}: {bot2_response_content}', bot2_name)
-
-        bot2_placeholder.markdown(f"<div class='message bot-message'><b>{bot2_name}:</b> {bot2_response_content}</div>", unsafe_allow_html=True)
-    else:
-        bot2_placeholder.empty() # Clear typing indicator if something went wrong fetching Bot 1's content
-    
-    st.session_state.bot2_initial_pending_display = False # Ensure this runs only once
-
-# Input field for new messages
+# Input field for new messages - RENDERED BEFORE DELAYED BOT 2 INITIAL MESSAGE
 if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
     # Save user message with their defined participant name in the content
@@ -356,6 +319,8 @@ if prompt := st.chat_input("Please type your full response in one message."):
     current_bot_name = chosen_personality["name"]
     start_message = chosen_personality["system_message"]
     instructions = start_message
+    # Ensure Bot 2's initial message is part of history if it has already been added
+    # The conversation_history should always reflect the current st.session_state["messages"]
     conversation_history_for_bot_A = [instructions] + [{"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]]
 
     typing_indicator_placeholder_A = st.empty()
@@ -402,3 +367,43 @@ if prompt := st.chat_input("Please type your full response in one message."):
         save_conversation(st.session_state["conversation_id"], user_id, f"{other_bot_name}: {bot_response_B}", other_bot_name)
         st.session_state["messages"].append({"role": "assistant", "content": bot_response_B, "name": other_bot_name})
         st.markdown(f"<div class='message bot-message'><b>{other_bot_name}:</b> {bot_response_B}</div>", unsafe_allow_html=True)
+
+# Delayed display of Bot 2's initial message
+if st.session_state.get("chat_started") and st.session_state.get("bot2_initial_pending_display", False):
+    DELAY_FOR_BOT2_INITIAL = 3  # seconds
+    bot2_placeholder = st.empty() 
+    bot2_name = bot_personality_2["name"]
+
+    # Show typing indicator for Bot 2
+    bot2_placeholder.markdown(f"<div class='message bot-message'><i>{bot2_name} is typing...</i></div>", unsafe_allow_html=True)
+    time.sleep(DELAY_FOR_BOT2_INITIAL) # Pause for the "typing" effect
+
+    # Generate and display Bot 2's actual message
+    initial_bot1_content = st.session_state.get("initial_bot1_opener_content")
+    if initial_bot1_content:
+        bot2_instructions = bot_personality_2["system_message"]
+        # For Bot 2's initial response, its history should only be its system message and Bot 1's opener
+        bot2_history = [
+            bot2_instructions,
+            {"role": "user", "content": initial_bot1_content} 
+        ]
+        try:
+            response_bot2 = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=bot2_history)
+            bot2_response_content = response_bot2.choices[0].message.content
+        except Exception as e:
+            print(f"Error generating Bot 2 initial response (delayed): {e}")
+            bot2_response_content = "Hmm, let me think about that..." # Fallback response
+        
+        new_bot2_message = {"role": "assistant", "content": bot2_response_content, "name": bot2_name}
+        st.session_state["messages"].append(new_bot2_message)
+        save_conversation(st.session_state["conversation_id"], user_id, f'{bot2_name}: {bot2_response_content}', bot2_name)
+
+        # Update the placeholder with the actual message
+        # This message is also now in st.session_state["messages"] and will be rendered by the main loop on next rerun
+        # So, we can just clear the placeholder or update it temporarily. 
+        # For simplicity and to avoid double rendering, let's make sure the placeholder is replaced by the final content.
+        bot2_placeholder.markdown(f"<div class='message bot-message'><b>{bot2_name}:</b> {bot2_response_content}</div>", unsafe_allow_html=True)
+    else:
+        bot2_placeholder.empty() # Clear typing indicator if something went wrong
+    
+    st.session_state.bot2_initial_pending_display = False # Ensure this runs only once
