@@ -108,6 +108,12 @@ def save_conversation(conversation_id, user_id, content, current_bot_personality
         cursor.close()
 
 if not st.session_state["chat_started"]:
+    # The user-facing instructional message (now displayed first)
+    instructional_text = "You have been randomly assigned to discuss the topic of imagination and creativity."
+    st.session_state["messages"].append({"role": "system", "content": instructional_text, "name": "Instructions"})
+    save_conversation(st.session_state["conversation_id"], user_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
+
+    # Initial exchange between bots (displayed after the system message)
     # Bot 1 (Participant_142) makes an opening statement
     bot1_opener_content = "I have a really active imagination!! It's why i love to play DND with friends"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
