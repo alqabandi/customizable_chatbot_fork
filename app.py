@@ -254,6 +254,12 @@ st.markdown("""
         padding-top: 0 !important;
     }
 
+    /* CSS to hide the "Running..." status indicator */
+    [data-testid="stStatusWidget"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
