@@ -148,13 +148,13 @@ if not st.session_state["chat_started"]:
 # Custom CSS for styling
 st.markdown("""
 <style>
-    <div class="chat-header">
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    /* Updated Google Font import to include Comfortaa */
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Roboto:wght@400;500&display=swap');
+    
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
-        /* Adjust padding-top if your custom header is still desired */
-        /* padding-top: 60px; */ 
+        padding-top: 60px; /* Ensure space for the fixed custom header */
         height: 100vh;
         display: flex;
         flex-direction: column;
@@ -169,18 +169,25 @@ st.markdown("""
         display: flex;
         align-items: center;
         padding: 10px;
-        background-color: #333333; /* Darker background for the header */
+        background-color: #707070; /* Changed to medium grey */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .chat-header h4 { /* Style for the "Chime" title */
+        font-family: 'Comfortaa', sans-serif;
+        color: white;
+        font-weight: 700; /* Bold */
+        margin: 0; /* Remove default margin if any */
     }
         
             
     .circle-logo {
         height: 40px;
         width: 40px;
-        background-color: #4CAF50;
+        background-color: #C3B1E1; /* Changed to pastel purple */
         border-radius: 50%;
         margin-right: 10px;
     }
