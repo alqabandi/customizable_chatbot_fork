@@ -65,7 +65,7 @@ create_conversations_table()
 
 #Get userID for the table
 params = st.experimental_get_query_params()
-userID = params.get("userID", ["unknown id"])[0]
+qualtrics_response_id = params.get("userID", ["unknown id"])[0] # Renamed from userID and ensured it's the one used
 
 human_participant_name = "You" # Define human user display name
 
@@ -89,21 +89,23 @@ bot_personality_2 = {
 personalities = [bot_personality_1, bot_personality_2]
 
 # Function to save conversations to the database
-def save_conversation(conversation_id, user_id, content, current_bot_personality_name):
+def save_conversation(conversation_id, user_id_to_save, content, current_bot_personality_name): # Renamed user_id parameter
     try:
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_hour = datetime.now().strftime("%H:%M:%S")
         cursor = conn.cursor()
+        # Use user_id_to_save from argument
         cursor.execute("INSERT INTO sypstreamlitdbtbl (user_id, date, hour, content, chatbot_type) VALUES (%s, %s, %s, %s, %s)", 
-                   (userID, current_date, current_hour, content, current_bot_personality_name)) # Use current_bot_personality_name
+                   (user_id_to_save, current_date, current_hour, content, current_bot_personality_name))
         conn.commit()
         cursor.close()
     except mysql.connector.Error as err:
         print("Something went wrong: {}".format(err))
-        # Fallback logging in case of error - consider if current_bot_personality_name should be included here too
+        # Fallback logging in case of error
         cursor = conn.cursor()
+        # Use user_id_to_save from argument in fallback as well
         cursor.execute("INSERT INTO sypstreamlitdbtbl (user_id, date, hour, content, chatbot_type) VALUES (%s, %s, %s, %s, %s)",
-                       (userID, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content, "error_fallback"))
+                       (user_id_to_save, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content, "error_fallback"))
         conn.commit()
         cursor.close()
 
@@ -111,13 +113,13 @@ if not st.session_state["chat_started"]:
     # The user-facing instructional message (now displayed first)
     instructional_text = "You have been randomly assigned to discuss sending aid to Ukraine."
     st.session_state["messages"].append({"role": "system", "content": instructional_text, "name": "Instructions"})
-    save_conversation(st.session_state["conversation_id"], user_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
+    save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
 
     # Initial exchange between bots (displayed after the system message)
     # Bot 1 (Republican_142) makes an opening statement
     bot1_opener_content = "I really disagree with sending aid. We have to deal with the cost of living crisis over here first"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
-    save_conversation(st.session_state["conversation_id"], user_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
+    save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
     
     # Store Bot 1's opener for Bot 2's context and set flag for delayed display of Bot 2
     st.session_state.initial_bot1_opener_content = bot1_opener_content
@@ -307,7 +309,7 @@ for message in st.session_state["messages"]:
 if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
     # Save user message with their defined participant name in the content
-    save_conversation(st.session_state["conversation_id"], user_id, f"{human_participant_name}: {prompt}", "user_message") 
+    save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f"{human_participant_name}: {prompt}", "user_message") 
     # Add user message to session state with name attribute
     st.session_state["messages"].append({"role": "user", "content": prompt, "name": human_participant_name})
     message_class = "user-message"
@@ -334,7 +336,7 @@ if prompt := st.chat_input("Please type your full response in one message."):
     time.sleep(delay_duration_A)
 
     typing_indicator_placeholder_A.empty()
-    save_conversation(st.session_state["conversation_id"], user_id, f"{current_bot_name}: {bot_response_A}", current_bot_name)
+    save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f"{current_bot_name}: {bot_response_A}", current_bot_name)
     st.session_state["messages"].append({"role": "assistant", "content": bot_response_A, "name": current_bot_name})
     st.markdown(f"<div class='message bot-message'><b>{current_bot_name}:</b> {bot_response_A}</div>", unsafe_allow_html=True)
 
@@ -364,7 +366,7 @@ if prompt := st.chat_input("Please type your full response in one message."):
         time.sleep(delay_duration_B)
 
         typing_indicator_placeholder_B.empty()
-        save_conversation(st.session_state["conversation_id"], user_id, f"{other_bot_name}: {bot_response_B}", other_bot_name)
+        save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f"{other_bot_name}: {bot_response_B}", other_bot_name)
         st.session_state["messages"].append({"role": "assistant", "content": bot_response_B, "name": other_bot_name})
         st.markdown(f"<div class='message bot-message'><b>{other_bot_name}:</b> {bot_response_B}</div>", unsafe_allow_html=True)
 
@@ -396,7 +398,7 @@ if st.session_state.get("chat_started") and st.session_state.get("bot2_initial_p
         
         new_bot2_message = {"role": "assistant", "content": bot2_response_content, "name": bot2_name}
         st.session_state["messages"].append(new_bot2_message)
-        save_conversation(st.session_state["conversation_id"], user_id, f'{bot2_name}: {bot2_response_content}', bot2_name)
+        save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'{bot2_name}: {bot2_response_content}', bot2_name)
 
         # Update the placeholder with the actual message
         # This message is also now in st.session_state["messages"] and will be rendered by the main loop on next rerun
