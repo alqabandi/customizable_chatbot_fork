@@ -257,6 +257,45 @@ st.markdown("""
         visibility: hidden !important;
     }
 
+    /* Comprehensive Streamlit UI hiding rules from forum post */
+    div[data-testid="stToolbar"] {
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
+    }
+    div[data-testid="stDecoration"] {
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
+    }
+    div[data-testid="stStatusWidget"] {
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
+    }
+    #MainMenu {
+        visibility: hidden;
+        height: 0%;
+    }
+    header { /* This is a general HTML element selector, could affect your custom .chat-header */
+        visibility: hidden;
+        height: 0%;
+    }
+    footer {
+        visibility: hidden;
+        height: 0%;
+    }
+
+    /* CSS to hide anchor links from headers (h1-h6) */
+    h1 > div > a, 
+    h2 > div > a, 
+    h3 > div > a, 
+    h4 > div > a, 
+    h5 > div > a, 
+    h6 > div > a {
+        display: none !important; /* Ensure it overrides Streamlit's default */
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
