@@ -144,7 +144,6 @@ if not st.session_state["chat_started"]:
     
     st.session_state["chat_started"] = True
 
-# Credits for Conrado Eiroa Solans for the following custom CSS that improved aesthetics and functionality!
 # Custom CSS for styling
 st.markdown("""
 <style>
@@ -161,33 +160,35 @@ st.markdown("""
         background: #EEE;
     }
             
-    .chat-header {
-        position: fixed; /* make "width: 44rem" if want to use full screen (but creates little visual bug in qualtrics) */
-        top: 0px; /* Increased to move the header lower */
+    /* Styles for your custom chat interface */
+    .chat-header { /* Your custom header */
+        position: fixed; 
+        top: 0px; 
         left: 0;
         right: 0;
         display: flex;
         align-items: center;
         padding: 10px;
-        background-color: #707070; /* Changed to medium grey */
+        background-color: #707070; /* Medium grey */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        z-index: 1;
+        z-index: 10; /* Ensure custom header is above other elements if general header rule is too broad */
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        visibility: visible !important; /* Explicitly keep custom header visible */
+        height: auto !important; /* Override height:0% if general header rule affects it */
     }
 
     .chat-header h4 { /* Style for the "Chime" title */
         font-family: 'Comfortaa', sans-serif;
         color: white;
         font-weight: 700; /* Bold */
-        margin: 0; /* Remove default margin if any */
+        margin: 0; 
     }
         
-            
     .circle-logo {
         height: 40px;
         width: 40px;
-        background-color: #C3B1E1; /* Changed to pastel purple */
+        background-color: #C3B1E1; /* Pastel purple */
         border-radius: 50%;
         margin-right: 10px;
         pointer-events: none; /* Make it not clickable */
@@ -195,7 +196,7 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        margin: 2rem auto 0 auto;
+        margin: 2rem auto 0 auto; 
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
@@ -223,59 +224,47 @@ st.markdown("""
         border-top-left-radius: 0;
         text-align: left;
     }
-    .system-prompt { /* New style for the system instructional message */
+    .system-prompt { 
         margin: 15px 0;
         padding: 10px;
         border-radius: 10px;
-        background-color: #e0e0e0; /* Light grey background */
-        color: #111; /* Darker text */
-        font-family: 'Georgia', serif; /* Different font */
+        background-color: #e0e0e0; 
+        color: #111; 
+        font-family: 'Georgia', serif; 
         text-align: center;
         border: 1px dashed #aaa;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
-    /* CSS to hide the default Streamlit header */
-    [data-testid="stHeader"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    /* Fallback for other potential header elements if the above is not enough */
-    div[data-testid="stApp"] > header {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* CSS to hide the "hamburger" menu button (often part of the toolbar) */
-    button[data-testid="stMainMenu"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* CSS to hide the entire toolbar that might contain the status widget */
+    /* Comprehensive Streamlit UI hiding rules from forum post */
     div[data-testid="stToolbar"] {
-        display: none !important;
-        visibility: hidden !important;
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
     }
-
-    /* CSS to hide the "Running..." status indicator (attempting again, ensuring !important) */
-    [data-testid="stStatusWidget"] {
-        display: none !important;
-        visibility: hidden !important;
+    div[data-testid="stDecoration"] {
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
     }
-
-    /* Fallback: Hide generic spinner classes if the above doesn't catch it */
-    .stSpinner {
-        display: none !important;
-        visibility: hidden !important;
+    div[data-testid="stStatusWidget"] {
+        visibility: hidden;
+        height: 0%;
+        position: fixed;
     }
-
-    /* Adjust body padding - this should be padding-top: 60px; if your custom .chat-header is fixed at top:0 */
-    /* The rule 'body > #root > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) { padding-top: 0 !important; }' */
-    /* was an attempt to remove Streamlit's default padding when its header is removed. */
-    /* If your .chat-header is providing the top visual bar, then body needs padding for it. */
-    /* Let's ensure body has the correct padding for your custom header. */
-    /* The body style already includes padding-top: 60px, which should be correct. */
+    #MainMenu {
+        visibility: hidden;
+        height: 0%;
+    }
+    header { /* This is a general HTML element selector, could affect your custom .chat-header */
+        visibility: hidden;
+        height: 0%;
+        /* position: fixed; -- We might not want to make all headers fixed if not intended */
+    }
+    footer {
+        visibility: hidden;
+        height: 0%;
+    }
 
 </style>
 """, unsafe_allow_html=True)
