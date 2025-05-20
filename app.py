@@ -71,7 +71,7 @@ human_participant_name = "Participant_147" # Define human user display name
 
 # Define two bot personalities for Republicans against Ukraine aid
 bot_personality_1 = {
-    "name": "Participant_142",
+    "name": "Republican_142",
     "system_message": {
         "role": "system",
         "content": "You disagree with sending aid to the ukraine, for conservative, republican reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
@@ -79,7 +79,7 @@ bot_personality_1 = {
 }
 
 bot_personality_2 = {
-    "name": "Participant_146", # Changed from Concise Carl / SkepticalSteve for anonymity
+    "name": "Republican_146", # Changed from Concise Carl / SkepticalSteve for anonymity
     "system_message": {
         "role": "system",
         "content": "You disagree with sending aid to the ukraine, for progressive, democratic reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
@@ -114,7 +114,7 @@ if not st.session_state["chat_started"]:
     save_conversation(st.session_state["conversation_id"], user_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
 
     # Initial exchange between bots (displayed after the system message)
-    # Bot 1 (Participant_142) makes an opening statement
+    # Bot 1 (Republican_142) makes an opening statement
     bot1_opener_content = "I really disagree with sending aid. We have to deal with the cost of living crisis over here first"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
     save_conversation(st.session_state["conversation_id"], user_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
