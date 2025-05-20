@@ -67,7 +67,7 @@ create_conversations_table()
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 
-human_participant_name = "Participant_147" # Define human user display name
+human_participant_name = "You" # Define human user display name
 
 # Define two bot personalities for Republicans against Ukraine aid
 bot_personality_1 = {
