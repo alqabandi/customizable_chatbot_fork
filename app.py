@@ -283,7 +283,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="chat-header">
-    <h4>We should send aid to the ukrain. Do you agree or disagree? Why or why not?</h4>
+    <h4>We should continue to send aid to Ukraine. Do you agree or disagree? Why or why not?</h4>
 </div>
 <div class="chat-container">
     <!-- Your messages will be inserted here by Streamlit -->
