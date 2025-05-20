@@ -168,30 +168,27 @@ st.markdown("""
         right: 0;
         display: flex;
         align-items: center;
+        justify-content: center; /* Center the text in the header */
         padding: 10px;
-        background-color: #707070; /* Changed to medium grey */
+        background-color: #707070; /* Medium grey */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        z-index: 1;
+        z-index: 10; 
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        visibility: visible !important; 
+        height: auto !important; 
     }
 
-    .chat-header h4 { /* Style for the "Chime" title */
-        font-family: 'Comfortaa', sans-serif;
+    .chat-header h4 { /* Style for the instructional text in header */
+        font-family: 'Roboto', sans-serif; /* Changed from Comfortaa for better readability of longer text */
         color: white;
-        font-weight: 700; /* Bold */
-        margin: 0; /* Remove default margin if any */
+        font-weight: 500; /* Medium weight */
+        font-size: 0.9rem; /* Adjust size to fit text */
+        margin: 0; 
+        text-align: center;
     }
         
-            
-    .circle-logo {
-        height: 40px;
-        width: 40px;
-        background-color: #C3B1E1; /* Changed to pastel purple */
-        border-radius: 50%;
-        margin-right: 10px;
-        pointer-events: none; /* Make it not clickable */
-    }
+    /* .circle-logo rule removed */
             
     .chat-container {
         flex-grow: 1;
@@ -265,8 +262,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="chat-header">
-    <div class="circle-logo"></div> 
-    <h4>Chime</h4>
+    <h4>You have been randomly assigned to discuss the topic of imagination and creativity.</h4>
 </div>
 <div class="chat-container">
     <!-- Your messages will be inserted here by Streamlit -->
