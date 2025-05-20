@@ -283,7 +283,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="chat-header">
-    <h4>You have been randomly assigned to discuss the topic of imagination and creativity.</h4>
+    <h4>DND is fun. Do you agree or disagree?</h4>
 </div>
 <div class="chat-container">
     <!-- Your messages will be inserted here by Streamlit -->
