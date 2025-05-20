@@ -148,8 +148,8 @@ if not st.session_state["chat_started"]:
 # Custom CSS for styling
 st.markdown("""
 <style>
-    /* Updated Google Font import to include Comfortaa */
-    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Roboto:wght@400;500&display=swap');
+    /* Updated Google Font import to include Lato */
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Lato:wght@400;700&family=Roboto:wght@400;500&display=swap');
     
     body {
         font-family: 'Roboto', sans-serif;
@@ -180,12 +180,13 @@ st.markdown("""
     }
 
     .chat-header h4 { /* Style for the instructional text in header */
-        font-family: 'Roboto', sans-serif; /* Changed from Comfortaa for better readability of longer text */
+        font-family: 'Lato', sans-serif; /* Changed to Lato */
         color: white;
-        font-weight: 500; /* Medium weight */
-        font-size: 0.9rem; /* Adjust size to fit text */
+        font-weight: 400; /* Regular weight */
+        font-size: 1rem;  /* Slightly larger */
         margin: 0; 
         text-align: center;
+        line-height: 1.4; /* Added for better readability if text wraps */
     }
         
     /* .circle-logo rule removed */
