@@ -74,7 +74,7 @@ bot_personality_1 = {
     "name": "Participant_142",
     "system_message": {
         "role": "system",
-        "content": "You disagree with sending aid to the ukraine, for conservative, republican reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
+        "content": "You love to play DND and have an active imagination. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
     }
 }
 
@@ -82,7 +82,7 @@ bot_personality_2 = {
     "name": "Participant_146", # Changed from Concise Carl / SkepticalSteve for anonymity
     "system_message": {
         "role": "system",
-        "content": "You disagree with sending aid to the ukraine, for progressive, democratic reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
+        "content": "You just found out you have aphantasia, a condition where you cannot imagine visual scenes in your mind, and that's given you an existential crisis. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
     }
 }
 
@@ -109,13 +109,13 @@ def save_conversation(conversation_id, user_id, content, current_bot_personality
 
 if not st.session_state["chat_started"]:
     # The user-facing instructional message (now displayed first)
-    instructional_text = "You have been randomly assigned to discuss sending aid to Ukraine."
+    instructional_text = "You have been randomly assigned to discuss the topic of imagination and creativity."
     st.session_state["messages"].append({"role": "system", "content": instructional_text, "name": "Instructions"})
     save_conversation(st.session_state["conversation_id"], user_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
 
     # Initial exchange between bots (displayed after the system message)
     # Bot 1 (Participant_142) makes an opening statement
-    bot1_opener_content = "I really disagree with sending aid. We have to deal with the cost of living crisis over here first"
+    bot1_opener_content = "I have a really active imagination!! It's why i love to play DND with friends"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
     save_conversation(st.session_state["conversation_id"], user_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
     
@@ -135,7 +135,7 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
-        padding-top: 60px; /* Ensure space for the fixed custom header */
+        padding-top: 40px; /* Reduced to match thinner header */
         height: 100vh;
         display: flex;
         flex-direction: column;
@@ -150,7 +150,7 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center; /* Center the text in the header */
-        padding: 10px;
+        padding: 5px 10px; /* Reduced padding */
         background-color: #707070; /* Medium grey */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
@@ -164,10 +164,10 @@ st.markdown("""
         font-family: 'Lato', sans-serif; /* Changed to Lato */
         color: white;
         font-weight: 400; /* Regular weight */
-        font-size: 1rem;  /* Slightly larger */
+        font-size: 0.8rem;  /* Reduced font size */
         margin: 0; 
         text-align: center;
-        line-height: 1.4; /* Added for better readability if text wraps */
+        line-height: 1.3; /* Adjusted line-height for smaller font */
     }
         
     /* .circle-logo rule removed */
@@ -283,7 +283,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="chat-header">
-    <h4>We should continue to send aid to Ukraine. Do you agree or disagree? Why or why not?</h4>
+    <h4>DND is fun. Do you agree or disagree?</h4>
 </div>
 <div class="chat-container">
     <!-- Your messages will be inserted here by Streamlit -->
