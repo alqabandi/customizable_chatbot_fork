@@ -241,24 +241,41 @@ st.markdown("""
         visibility: hidden !important;
     }
     /* Fallback for other potential header elements if the above is not enough */
-    /* You might need to inspect the Streamlit app in your browser's developer tools */
-    /* to find the exact selectors if the header persists. */
-    /* For example, the main app container's direct header child: */
     div[data-testid="stApp"] > header {
         display: none !important;
         visibility: hidden !important;
     }
-    /* Ensure body has no top padding if Streamlit header is gone */
-    /* and you are not using your own fixed custom header */
-    body > #root > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
-        padding-top: 0 !important;
+
+    /* CSS to hide the "hamburger" menu button (often part of the toolbar) */
+    button[data-testid="stMainMenu"] {
+        display: none !important;
+        visibility: hidden !important;
     }
 
-    /* CSS to hide the "Running..." status indicator */
+    /* CSS to hide the entire toolbar that might contain the status widget */
+    div[data-testid="stToolbar"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* CSS to hide the "Running..." status indicator (attempting again, ensuring !important) */
     [data-testid="stStatusWidget"] {
         display: none !important;
         visibility: hidden !important;
     }
+
+    /* Fallback: Hide generic spinner classes if the above doesn't catch it */
+    .stSpinner {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Adjust body padding - this should be padding-top: 60px; if your custom .chat-header is fixed at top:0 */
+    /* The rule 'body > #root > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) { padding-top: 0 !important; }' */
+    /* was an attempt to remove Streamlit's default padding when its header is removed. */
+    /* If your .chat-header is providing the top visual bar, then body needs padding for it. */
+    /* Let's ensure body has the correct padding for your custom header. */
+    /* The body style already includes padding-top: 60px, which should be correct. */
 
 </style>
 """, unsafe_allow_html=True)
