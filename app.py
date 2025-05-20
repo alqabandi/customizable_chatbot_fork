@@ -190,6 +190,7 @@ st.markdown("""
         background-color: #C3B1E1; /* Changed to pastel purple */
         border-radius: 50%;
         margin-right: 10px;
+        pointer-events: none; /* Make it not clickable */
     }
             
     .chat-container {
