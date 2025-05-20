@@ -150,7 +150,7 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center; /* Center the text in the header */
-        padding: 5px 10px; /* Reduced padding */
+        padding: 5px 5px; /* Reduced padding */
         background-color: #707070; /* Medium grey */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
@@ -164,10 +164,10 @@ st.markdown("""
         font-family: 'Lato', sans-serif; /* Changed to Lato */
         color: white;
         font-weight: 400; /* Regular weight */
-        font-size: 0.8rem;  /* Reduced font size */
+        font-size: 1rem;  /* Reduced font size */
         margin: 0; 
         text-align: center;
-        line-height: 1.3; /* Adjusted line-height for smaller font */
+        line-height: 1; /* Adjusted line-height for smaller font */
     }
         
     /* .circle-logo rule removed */
