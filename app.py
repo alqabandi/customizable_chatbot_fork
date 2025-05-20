@@ -184,7 +184,7 @@ st.markdown("""
         padding: 10px;
         border-radius: 20px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        width: 85%;
+        width: 95%;
         position: relative;
         word-wrap: break-word;
     }
