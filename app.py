@@ -153,7 +153,8 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
-        padding-top: 60px;
+        /* Adjust padding-top if your custom header is still desired */
+        /* padding-top: 60px; */ 
         height: 100vh;
         display: flex;
         flex-direction: column;
@@ -224,6 +225,25 @@ st.markdown("""
         text-align: center;
         border: 1px dashed #aaa;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* CSS to hide the default Streamlit header */
+    [data-testid="stHeader"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    /* Fallback for other potential header elements if the above is not enough */
+    /* You might need to inspect the Streamlit app in your browser's developer tools */
+    /* to find the exact selectors if the header persists. */
+    /* For example, the main app container's direct header child: */
+    div[data-testid="stApp"] > header {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    /* Ensure body has no top padding if Streamlit header is gone */
+    /* and you are not using your own fixed custom header */
+    body > #root > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+        padding-top: 0 !important;
     }
 
 </style>
