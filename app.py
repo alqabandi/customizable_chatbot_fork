@@ -69,20 +69,20 @@ qualtrics_response_id = params.get("userID", ["unknown id"])[0] # Renamed from u
 
 human_participant_name = "You" # Define human user display name
 
-# Define two bot personalities for Republicans against Ukraine aid
+# Define two bot personalities 
 bot_personality_1 = {
-    "name": "Republican_142",
+    "name": "Participant_142",
     "system_message": {
         "role": "system",
-        "content": "You disagree with sending aid to the ukraine, for conservative, republican reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
+        "content": "You disagree with that food needs lots of spices in order to taste good. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
     }
 }
 
 bot_personality_2 = {
-    "name": "Republican_146", # Changed from Concise Carl / SkepticalSteve for anonymity
+    "name": "Participant_146", # Changed from Concise Carl / SkepticalSteve for anonymity
     "system_message": {
         "role": "system",
-        "content": "You disagree with sending aid to the ukraine, for progressive, democratic reasons. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
+        "content": "You think that good food needs some amount of spices. Write a short response between 30 and 150 characters in the style of your personality. Use informal language. Do not use emojis or hashtags."
     }
 }
 
@@ -111,13 +111,13 @@ def save_conversation(conversation_id, user_id_to_save, content, current_bot_per
 
 if not st.session_state["chat_started"]:
     # The user-facing instructional message (now displayed first)
-    instructional_text = "You have been randomly assigned to discuss sending aid to Ukraine."
+    instructional_text = "You have been randomly assigned to discuss what qualifies as good food."
     st.session_state["messages"].append({"role": "system", "content": instructional_text, "name": "Instructions"})
     save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'Instructions: {instructional_text.replace("<br>", " ")}', "System_Instruction")
 
     # Initial exchange between bots (displayed after the system message)
     # Bot 1 (Republican_142) makes an opening statement
-    bot1_opener_content = "I really disagree with sending aid. We have to deal with the cost of living crisis over here first"
+    bot1_opener_content = "I really think that a plain dish of sauteed cod counts as a really good plate of food!"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
     save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
     
@@ -285,7 +285,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="chat-header">
-    <h4>We should continue to send aid to Ukraine. Do you agree or disagree? Why or why not?</h4>
+    <h4>What qualifies as good food?</h4>
 </div>
 <div class="chat-container">
     <!-- Your messages will be inserted here by Streamlit -->
