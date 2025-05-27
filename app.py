@@ -1,7 +1,7 @@
 import openai
 import streamlit as st
 from datetime import datetime
-import mysql.connector
+import pymongo
 import uuid
 import random
 import time
@@ -35,36 +35,21 @@ js_code = """
 st.markdown(js_code, unsafe_allow_html=True)
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
 
-# Database connection
-conn = mysql.connector.connect(
-    user=st.secrets['sql_user'],
-    password=st.secrets['sql_password'],
-    database=st.secrets['sql_database'],
-    host=st.secrets['sql_host'],
-    port=st.secrets['sql_port'],
-    charset='utf8mb4'
-)
+# MongoDB connection using pymongo
+@st.cache_resource
+def init_connection():
+    # Only pass valid MongoClient options (host, port, username, password)
+    mongo_args = dict(st.secrets["mongo"])
+    # Remove any non-MongoClient options if present
+    mongo_args.pop("mongo_db", None)
+    return pymongo.MongoClient(**mongo_args)
 
-# Create output table
-def create_conversations_table():
-    cursor = conn.cursor()
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS sypstreamlitdbtbl (
-        user_id VARCHAR(255),
-        date VARCHAR(255),
-        hour VARCHAR(255),
-        content MEDIUMTEXT,
-        chatbot_type VARCHAR(255)
-    )
-    ''')
-    conn.commit()
-    cursor.close()
-
-# Ensure the table is created before trying to save to it
-create_conversations_table()
+client = init_connection()
+db = client[st.secrets["mongo"]["mongo_db"]]
+conversations_collection = db["sypstreamlitdbtbl"]
 
 #Get userID for the table
-params = st.experimental_get_query_params()
+params = st.query_params()
 qualtrics_response_id = params.get("userID", ["unknown id"])[0] # Renamed from userID and ensured it's the one used
 
 human_participant_name = "You" # Define human user display name
@@ -88,26 +73,30 @@ bot_personality_2 = {
 
 personalities = [bot_personality_1, bot_personality_2]
 
-# Function to save conversations to the database
-def save_conversation(conversation_id, user_id_to_save, content, current_bot_personality_name): # Renamed user_id parameter
+# Function to save conversations to the database (MongoDB)
+def save_conversation(conversation_id, user_id_to_save, content, current_bot_personality_name):
     try:
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_hour = datetime.now().strftime("%H:%M:%S")
-        cursor = conn.cursor()
-        # Use user_id_to_save from argument
-        cursor.execute("INSERT INTO sypstreamlitdbtbl (user_id, date, hour, content, chatbot_type) VALUES (%s, %s, %s, %s, %s)", 
-                   (user_id_to_save, current_date, current_hour, content, current_bot_personality_name))
-        conn.commit()
-        cursor.close()
-    except mysql.connector.Error as err:
-        print("Something went wrong: {}".format(err))
+        conversations_collection.insert_one({
+            "conversation_id": conversation_id,
+            "user_id": user_id_to_save,
+            "date": current_date,
+            "hour": current_hour,
+            "content": content,
+            "chatbot_type": current_bot_personality_name
+        })
+    except Exception as err:
+        print(f"Something went wrong: {err}")
         # Fallback logging in case of error
-        cursor = conn.cursor()
-        # Use user_id_to_save from argument in fallback as well
-        cursor.execute("INSERT INTO sypstreamlitdbtbl (user_id, date, hour, content, chatbot_type) VALUES (%s, %s, %s, %s, %s)",
-                       (user_id_to_save, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content, "error_fallback"))
-        conn.commit()
-        cursor.close()
+        conversations_collection.insert_one({
+            "conversation_id": conversation_id,
+            "user_id": user_id_to_save,
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "hour": datetime.now().strftime("%H:%M:%S"),
+            "content": content,
+            "chatbot_type": "error_fallback"
+        })
 
 if not st.session_state["chat_started"]:
     # The user-facing instructional message (now displayed first)

@@ -60,8 +60,6 @@ matplotlib-inline==0.1.6
 mdurl==0.1.2
 mistune==3.0.1
 multidict==6.0.4
-mysql-connector-python==8.1.0
-mysqlclient==2.2.0
 nbclient==0.8.0
 nbconvert==7.8.0
 nbformat==5.9.2
@@ -129,3 +127,4 @@ websocket-client==1.6.3
 Werkzeug==2.3.7
 yarl==1.9.2
 zipp==3.17.0
+pymongo
