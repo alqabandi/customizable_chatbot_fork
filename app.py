@@ -1,10 +1,13 @@
-import openai
+from openai import OpenAI
 import streamlit as st
 from datetime import datetime
 import pymongo
 import uuid
 import random
 import time
+
+openai_client = OpenAI(api_key=st.secrets["API_KEY"])
+
 
 # Initialize session state for message tracking and other variables
 if "last_submission" not in st.session_state:
@@ -17,7 +20,6 @@ if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
 
 # Set up OpenAI API key
-openai.api_key = st.secrets["API_KEY"]
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it 
 js_code = """
@@ -44,12 +46,12 @@ def init_connection():
     mongo_args.pop("mongo_db", None)
     return pymongo.MongoClient(**mongo_args)
 
-client = init_connection()
-db = client[st.secrets["mongo"]["mongo_db"]]
+mongo_client = init_connection()
+db = mongo_client[st.secrets["mongo"]["mongo_db"]]
 conversations_collection = db["sypstreamlitdbtbl"]
 
 #Get userID for the table
-params = st.query_params()
+params = st.query_params
 qualtrics_response_id = params.get("userID", ["unknown id"])[0] # Renamed from userID and ensured it's the one used
 
 human_participant_name = "You" # Define human user display name
@@ -109,11 +111,11 @@ if not st.session_state["chat_started"]:
     bot1_opener_content = "I really think that a plain dish of sauteed cod counts as a really good plate of food!"
     st.session_state["messages"].append({"role": "assistant", "content": bot1_opener_content, "name": bot_personality_1["name"]})
     save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'{bot_personality_1["name"]}: {bot1_opener_content}', bot_personality_1["name"])
-    
+
     # Store Bot 1's opener for Bot 2's context and set flag for delayed display of Bot 2
     st.session_state.initial_bot1_opener_content = bot1_opener_content
     st.session_state.bot2_initial_pending_display = True
-    
+
     st.session_state["chat_started"] = True
 
 # Credits for Conrado Eiroa Solans for the following custom CSS that improved aesthetics and functionality!
@@ -284,7 +286,7 @@ st.markdown("""
 # Display messages using markdown to apply custom styles
 for message in st.session_state["messages"]:
     message_class = "user-message" if message["role"] == "user" else ("bot-message" if message["role"] == "assistant" else "system-prompt")
-    
+
     if message["role"] == "system": # Handle system/instructional messages
         st.markdown(f"<div class='{message_class}'>{message['content']}</div>", unsafe_allow_html=True)
     elif (message["role"] == "assistant" or message["role"] == "user") and "name" in message:
@@ -317,7 +319,7 @@ if prompt := st.chat_input("Please type your full response in one message."):
     typing_indicator_placeholder_A = st.empty()
     typing_indicator_placeholder_A.markdown(f"<div class='message bot-message'><i>{current_bot_name} is typing...</i></div>", unsafe_allow_html=True)
 
-    response_A = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=conversation_history_for_bot_A)
+    response_A = openai_client.chat.completions.create(model="gpt-4-turbo-preview", messages=conversation_history_for_bot_A)
     bot_response_A = response_A.choices[0].message.content
 
     typing_speed_cps = 20
@@ -337,18 +339,18 @@ if prompt := st.chat_input("Please type your full response in one message."):
             other_bot_personality = personalities[1]
         else:
             other_bot_personality = personalities[0]
-        
+
         other_bot_name = other_bot_personality["name"]
         other_bot_start_message = other_bot_personality["system_message"]
-        
+
         # Conversation history for Bot B includes Bot A's latest message
         conversation_history_for_bot_B = [other_bot_start_message] + \
                                          [{"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]]
-        
+
         typing_indicator_placeholder_B = st.empty()
         typing_indicator_placeholder_B.markdown(f"<div class='message bot-message'><i>{other_bot_name} is typing...</i></div>", unsafe_allow_html=True)
 
-        response_B = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=conversation_history_for_bot_B)
+        response_B = openai_client.chat.completions.create(model="gpt-4-turbo-preview", messages=conversation_history_for_bot_B)
         bot_response_B = response_B.choices[0].message.content
 
         delay_duration_B = len(bot_response_B) / typing_speed_cps
@@ -379,12 +381,12 @@ if st.session_state.get("chat_started") and st.session_state.get("bot2_initial_p
             {"role": "user", "content": initial_bot1_content} 
         ]
         try:
-            response_bot2 = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=bot2_history)
+            response_bot2 = openai_client.chat.completions.create(model="gpt-4-turbo-preview", messages=bot2_history)
             bot2_response_content = response_bot2.choices[0].message.content
         except Exception as e:
             print(f"Error generating Bot 2 initial response (delayed): {e}")
             bot2_response_content = "Hmm, let me think about that..." # Fallback response
-        
+
         new_bot2_message = {"role": "assistant", "content": bot2_response_content, "name": bot2_name}
         st.session_state["messages"].append(new_bot2_message)
         save_conversation(st.session_state["conversation_id"], qualtrics_response_id, f'{bot2_name}: {bot2_response_content}', bot2_name)
@@ -396,5 +398,5 @@ if st.session_state.get("chat_started") and st.session_state.get("bot2_initial_p
         bot2_placeholder.markdown(f"<div class='message bot-message'><b>{bot2_name}:</b> {bot2_response_content}</div>", unsafe_allow_html=True)
     else:
         bot2_placeholder.empty() # Clear typing indicator if something went wrong
-    
+
     st.session_state.bot2_initial_pending_display = False # Ensure this runs only once
